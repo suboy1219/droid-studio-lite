@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell, clipboard } from 'electron';
 import path from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
@@ -26,6 +26,10 @@ let mainWindow: BrowserWindow | null = null;
 let logcat: LogcatSession | null = null;
 let deviceTimer: NodeJS.Timeout | null = null;
 let lastDeviceKey = '';
+
+if (process.platform === 'win32') {
+  app.commandLine.appendSwitch('disable-features', 'CalculateNativeWinOcclusion');
+}
 
 function broadcastDevices(devices: DeviceInfo[]) {
   const key = devices.map((d) => `${d.serial}:${d.state}`).join('|');
@@ -251,6 +255,11 @@ function registerIpc() {
     if (result.canceled || !result.filePath) return { ok: false, canceled: true };
     await writeFile(result.filePath, content, 'utf8');
     return { ok: true, path: result.filePath };
+  });
+
+  ipcMain.handle('clipboard:write', async (_event, text: string) => {
+    clipboard.writeText(text);
+    return { ok: true };
   });
 }
 

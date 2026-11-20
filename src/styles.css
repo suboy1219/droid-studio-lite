@@ -695,6 +695,12 @@ button {
   font-family: Consolas, 'Cascadia Mono', monospace;
   font-size: 12px;
   background: #232528;
+  user-select: text;
+  outline: none;
+}
+
+.logcat-body:focus-visible {
+  box-shadow: inset 0 0 0 1px rgba(53, 116, 240, 0.35);
 }
 
 .logcat-canvas {
@@ -717,6 +723,48 @@ button {
 
 .log-row:hover {
   background: #2a2d31;
+}
+
+.log-row.selected {
+  background: rgba(53, 116, 240, 0.24);
+}
+
+.log-row.selected .log-time,
+.log-row.selected .log-pid {
+  color: #93a3bb;
+}
+
+.copy-hint {
+  color: #6edb9c;
+  margin-left: 6px;
+}
+
+.row-menu {
+  position: fixed;
+  z-index: 60;
+  min-width: 150px;
+  padding: 4px;
+  background: #2f3237;
+  border: 1px solid #4a4f57;
+  border-radius: 6px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.row-menu button {
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.row-menu button:hover {
+  background: #3a3f46;
 }
 
 .log-time {

@@ -10,6 +10,7 @@ import { html } from '@codemirror/lang-html';
 import { java } from '@codemirror/lang-java';
 import type { Extension } from '@codemirror/state';
 import type { EditorTab } from '../types';
+import { redact } from '../lib/redact';
 
 interface Props {
   tabs: EditorTab[];
@@ -156,7 +157,9 @@ export default function EditorPane({
 
       {activeTab && (
         <div className="editor-foot">
-          <span>{activeTab.kind === 'remote' ? `设备 · ${activeTab.serial}` : '本地'}</span>
+          <span>
+            {activeTab.kind === 'remote' ? `设备 · ${redact(activeTab.serial ?? '')}` : '本地'}
+          </span>
           <span className="muted">{activeTab.path}</span>
           <span className="statusbar-spacer" />
           <span>{activeTab.dirty ? '未保存' : '已保存'}</span>

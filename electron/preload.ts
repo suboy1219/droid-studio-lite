@@ -48,7 +48,9 @@ const api = {
   revealInExplorer: (filePath: string) => ipcRenderer.invoke('local:reveal', filePath),
 
   exportLog: (content: string, suggested: string) =>
-    ipcRenderer.invoke('log:export', content, suggested)
+    ipcRenderer.invoke('log:export', content, suggested),
+
+  writeClipboard: (text: string) => ipcRenderer.invoke('clipboard:write', text)
 };
 
 contextBridge.exposeInMainWorld('api', api);

@@ -26,6 +26,7 @@ declare global {
       saveLocalTextAs(content: string, suggested: string): Promise<{ ok: boolean; canceled?: boolean; path?: string }>;
       revealInExplorer(filePath: string): Promise<{ ok: boolean }>;
       exportLog(content: string, suggested: string): Promise<{ ok: boolean; canceled?: boolean; path?: string }>;
+      writeClipboard(text: string): Promise<{ ok: boolean }>;
     };
   }
 }

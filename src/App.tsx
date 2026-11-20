@@ -4,6 +4,7 @@ import DeviceExplorer from './components/DeviceExplorer';
 import LogcatPanel from './components/LogcatPanel';
 import EditorPane from './components/EditorPane';
 import type { AdbStatus, DeviceInfo, EditorTab, LogEntry, LogcatState, RemoteEntry } from './types';
+import { redact } from './lib/redact';
 
 const MAX_LINES = 30000;
 
@@ -328,7 +329,7 @@ export default function App() {
             {!devices.length && <option value="">未检测到设备</option>}
             {devices.map((device) => (
               <option key={device.serial} value={device.serial}>
-                {device.model ?? device.serial} · {device.serial}
+                {redact(device.model ?? device.serial)} · {redact(device.serial)}
                 {device.state !== 'device' ? ` (${device.state})` : ''}
               </option>
             ))}
@@ -426,7 +427,11 @@ export default function App() {
       <footer className="statusbar">
         <span>{adb?.ok ? `adb ${adb.version ?? ''}` : 'adb 未就绪'}</span>
         <span className="sep">|</span>
-        <span>{currentDevice ? `${currentDevice.model ?? ''} ${currentDevice.serial}` : '无设备'}</span>
+        <span>
+          {currentDevice
+            ? `${redact(currentDevice.model ?? '')} ${redact(currentDevice.serial)}`
+            : '无设备'}
+        </span>
         <span className="sep">|</span>
         <span>
           Logcat {logState}
