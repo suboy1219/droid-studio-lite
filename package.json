@@ -1,10 +1,11 @@
 {
   "name": "droid-studio-lite",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lightweight Android Studio companion: Logcat, Device Explorer and text editor",
   "private": true,
   "main": "dist-electron/main.js",
   "scripts": {
+    "test": "node --test",
     "dev": "node scripts/dev.mjs",
     "build": "node scripts/build.mjs",
     "start": "electron .",

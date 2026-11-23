@@ -11,6 +11,7 @@ import {
   type DeviceInfo
 } from './adb';
 import { LogcatSession } from './logcat';
+import { installApplicationMenu } from './helpMenu';
 import {
   listDir,
   pullRemote,
@@ -55,7 +56,7 @@ function createWindow() {
     minHeight: 640,
     backgroundColor: '#1e1f22',
     title: 'Droid Studio Lite',
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -264,6 +265,7 @@ function registerIpc() {
 }
 
 app.whenReady().then(() => {
+  installApplicationMenu();
   registerIpc();
   createWindow();
   void pollDevices();

@@ -42,7 +42,7 @@ No Gradle startup, no project indexing. Open it, read logs, browse device files,
 
 1. Install `adb` (Android SDK Platform-Tools)
 2. Enable USB debugging on the phone and authorize this machine
-3. Double-click `DroidStudioLite-0.1.0.exe`
+3. Double-click `DroidStudioLite-0.1.1.exe`
 
 The portable build unpacks to a temp folder on first launch, so it takes a few extra seconds.
 
@@ -111,3 +111,7 @@ Screenshots in this document were captured with the built-in demo mode (`?demo=1
 ## License
 
 [MIT](LICENSE)
+
+## Check for updates
+
+Choose **Help → Check for updates** (帮助 → 检测更新) in the window. The app compares its version with the latest stable GitHub release and offers to open the release page when an update is available. It also reports missing releases and connection errors.
