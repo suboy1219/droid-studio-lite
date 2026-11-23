@@ -1,5 +1,7 @@
 # Droid Studio Lite
 
+官网: [https://suboy1219.github.io/suboy](https://suboy1219.github.io/suboy)
+
 [English](README.en.md) | 简体中文
 
 一个轻量的 Android 开发辅助工具，只保留日常调试里最常用的三件事：**Logcat**、**Device Explorer**、**文本编辑器**。

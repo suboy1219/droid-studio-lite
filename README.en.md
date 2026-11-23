@@ -1,5 +1,7 @@
 # Droid Studio Lite
 
+官网: [https://suboy1219.github.io/suboy](https://suboy1219.github.io/suboy)
+
 English | [简体中文](README.md)
 
 A lightweight Android companion that keeps only the three things you actually use during everyday debugging: **Logcat**, **Device Explorer**, and a **text editor**.
