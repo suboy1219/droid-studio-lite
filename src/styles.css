@@ -494,6 +494,11 @@ button {
   color: #8fb4f5;
 }
 
+.tab-kind.snapshot {
+  background: rgba(224, 176, 80, 0.16);
+  color: #e0b050;
+}
+
 .tab-name {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -530,12 +535,25 @@ button {
 
 .editor-body {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
   overflow: hidden;
 }
 
+.editor-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  flex: none;
+}
+
 .editor-host {
-  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .editor-host .cm-editor {

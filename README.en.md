@@ -16,6 +16,7 @@ No Gradle startup, no project indexing. Open it, read logs, browse device files,
 
 - Live streaming log with level (V/D/I/W/E/F), tag, keyword and pid filters
 - Pause / resume, follow tail, clear device log, export to txt
+- Click Record to copy all currently filtered logs into a new editor tab for independent editing, searching and saving
 - Click a row to select it, `Shift`-click for a range, then `Ctrl+C` or right-click to copy rows, message, tag, or selected text
 - Automatic reconnect after adb drops; first screen loads the last ~4,000 lines, UI keeps up to 30,000
 - Virtualized list — tens of thousands of rows stay smooth
@@ -44,7 +45,7 @@ No Gradle startup, no project indexing. Open it, read logs, browse device files,
 
 1. Install `adb` (Android SDK Platform-Tools)
 2. Enable USB debugging on the phone and authorize this machine
-3. Double-click `DroidStudioLite-0.1.1.exe`
+3. Double-click `DroidStudioLite-0.1.2.exe`
 
 The portable build unpacks to a temp folder on first launch, so it takes a few extra seconds.
 
@@ -79,6 +80,7 @@ $env:ELECTRON_BUILDER_BINARIES_MIRROR='https://npmmirror.com/mirrors/electron-bu
 | `Ctrl+S` | Save current file |
 | `Ctrl+Shift+S` | Save as (converts to a local file) |
 | `Ctrl+W` | Close current tab |
+| `Ctrl+F` | Search / replace in the editor |
 | `Ctrl+C` | Copy selected log rows or selected text (when the log panel has focus) |
 
 ## How adb is located

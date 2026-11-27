@@ -164,6 +164,27 @@ export default function App() {
     [tabs, serial, notify]
   );
 
+  const recordLogs = useCallback((content: string) => {
+    const now = new Date();
+    const stamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+      now.getDate()
+    ).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}-${String(
+      now.getMinutes()
+    ).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}-${String(
+      now.getMilliseconds()
+    ).padStart(3, '0')}`;
+    const tab: EditorTab = {
+      id: crypto.randomUUID(),
+      kind: 'snapshot',
+      path: '',
+      name: `logcat-${stamp}.txt`,
+      content,
+      dirty: true
+    };
+    setTabs((prev) => [...prev, tab]);
+    setActiveTabId(tab.id);
+  }, []);
+
   const openLocalFiles = useCallback(async () => {
     try {
       const result = await window.api.openLocalText();
@@ -200,7 +221,26 @@ export default function App() {
     async (tab: EditorTab | null) => {
       if (!tab) return;
       try {
-        if (tab.kind === 'remote' && tab.serial) {
+        if (tab.kind === 'snapshot') {
+          const result = await window.api.saveLocalTextAs(tab.content, tab.name);
+          if (!result.ok || !result.path) return;
+          const path = result.path;
+          setTabs((prev) =>
+            prev.map((item) =>
+              item.id === tab.id
+                ? {
+                    ...item,
+                    kind: 'local',
+                    path,
+                    name: path.split(/[\\/]/).pop() ?? tab.name,
+                    dirty: item.content !== tab.content
+                  }
+                : item
+            )
+          );
+          notify(`已保存 ${path}`);
+          return;
+        } else if (tab.kind === 'remote' && tab.serial) {
           await window.api.fsWriteText(tab.serial, tab.path, tab.content);
         } else {
           await window.api.saveLocalText(tab.path, tab.content);
@@ -249,6 +289,7 @@ export default function App() {
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return;
       const mod = event.ctrlKey || event.metaKey;
       if (mod && event.key.toLowerCase() === 's') {
         event.preventDefault();
@@ -415,6 +456,7 @@ export default function App() {
                   serial={serial}
                   onClear={clearLogcat}
                   onExport={exportLogs}
+                  onRecord={recordLogs}
                   onRestart={restartLogcat}
                   onStop={stopLogcat}
                 />

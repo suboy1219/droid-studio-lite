@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { EditorView, basicSetup } from 'codemirror';
 import { EditorState } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
+import { openSearchPanel } from '@codemirror/search';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { javascript } from '@codemirror/lang-javascript';
 import { json } from '@codemirror/lang-json';
@@ -60,6 +61,7 @@ function CodeEditor({
   onSave: () => void;
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
+  const viewRef = useRef<EditorView | null>(null);
   const changeRef = useRef(onChange);
   const saveRef = useRef(onSave);
   changeRef.current = onChange;
@@ -93,12 +95,34 @@ function CodeEditor({
         ]
       })
     });
-    return () => view.destroy();
+    viewRef.current = view;
+    view.focus();
+    return () => {
+      viewRef.current = null;
+      view.destroy();
+    };
     // 仅在切换文件时重建编辑器
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab.id]);
 
-  return <div className="editor-host" ref={hostRef} />;
+  return (
+    <>
+      <div className="editor-tools">
+        <button
+          className="btn btn-sm"
+          title="搜索 / 替换 (Ctrl+F)"
+          onClick={() => {
+            const view = viewRef.current;
+            if (view) openSearchPanel(view);
+          }}
+        >
+          搜索
+        </button>
+        <span className="muted">Ctrl+F 搜索 / 替换</span>
+      </div>
+      <div className="editor-host" ref={hostRef} />
+    </>
+  );
 }
 
 export default function EditorPane({
@@ -119,9 +143,11 @@ export default function EditorPane({
             key={tab.id}
             className={`tab ${tab.id === activeTabId ? 'active' : ''}`}
             onClick={() => onSelect(tab.id)}
-            title={tab.path}
+            title={tab.path || tab.name}
           >
-            <span className={`tab-kind ${tab.kind}`}>{tab.kind === 'remote' ? 'DEV' : 'LOCAL'}</span>
+            <span className={`tab-kind ${tab.kind}`}>
+              {tab.kind === 'remote' ? 'DEV' : tab.kind === 'snapshot' ? 'LOG' : 'LOCAL'}
+            </span>
             <span className="tab-name">
               {tab.name}
               {tab.dirty && <span className="dirty-dot">●</span>}
@@ -158,7 +184,11 @@ export default function EditorPane({
       {activeTab && (
         <div className="editor-foot">
           <span>
-            {activeTab.kind === 'remote' ? `设备 · ${redact(activeTab.serial ?? '')}` : '本地'}
+            {activeTab.kind === 'remote'
+              ? `设备 · ${redact(activeTab.serial ?? '')}`
+              : activeTab.kind === 'snapshot'
+                ? '日志记录'
+                : '本地'}
           </span>
           <span className="muted">{activeTab.path}</span>
           <span className="statusbar-spacer" />

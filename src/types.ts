@@ -30,7 +30,7 @@ export interface RemoteEntry {
 
 export interface EditorTab {
   id: string;
-  kind: 'local' | 'remote';
+  kind: 'local' | 'remote' | 'snapshot';
   path: string;
   name: string;
   content: string;

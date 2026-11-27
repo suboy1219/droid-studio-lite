@@ -23,6 +23,7 @@ interface Props {
   serial: string;
   onClear: () => void;
   onExport: (lines: LogEntry[]) => void;
+  onRecord: (content: string) => void;
   onRestart: () => void;
   onStop: () => void;
 }
@@ -34,6 +35,7 @@ export default function LogcatPanel({
   serial,
   onClear,
   onExport,
+  onRecord,
   onRestart,
   onStop
 }: Props) {
@@ -261,6 +263,14 @@ export default function LogcatPanel({
           </button>
           <button className={`btn btn-sm ${paused ? 'btn-warn' : ''}`} onClick={togglePause}>
             {paused ? '恢复' : '暂停'}
+          </button>
+          <button
+            className="btn btn-sm"
+            onClick={() => onRecord(filtered.map(formatEntry).join('\n'))}
+            disabled={!filtered.length}
+            title="将当前筛选的全部日志复制到新标签页，可编辑和搜索"
+          >
+            记录
           </button>
           <button className="btn btn-sm" onClick={onClear} disabled={!serial}>
             清空

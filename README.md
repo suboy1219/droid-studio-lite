@@ -16,6 +16,7 @@
 
 - 实时流式日志，支持级别（V/D/I/W/E/F）、tag、关键字、pid 过滤
 - 暂停 / 恢复、自动跟随最新、清空设备日志、导出为 txt
+- 点击「记录」将当前筛选的全部日志复制到新的编辑器标签页，支持独立编辑、搜索和保存
 - 点击选中行、`Shift` 连选；`Ctrl+C` 或右键菜单复制整行、消息、tag、选中文本
 - 断线自动重连，首屏只取最近约 4000 行，界面最多保留 3 万行
 - 虚拟滚动，几万行也不卡
@@ -44,7 +45,7 @@
 
 1. 确保本机已安装 `adb`（Android SDK Platform-Tools）
 2. 手机开启「USB 调试」并授权本机
-3. 双击 `DroidStudioLite-0.1.1.exe`
+3. 双击 `DroidStudioLite-0.1.2.exe`
 
 首次启动会解压到临时目录，比安装版稍慢几秒，之后正常。
 
@@ -79,6 +80,7 @@ $env:ELECTRON_BUILDER_BINARIES_MIRROR='https://npmmirror.com/mirrors/electron-bu
 | `Ctrl+S` | 保存当前文件 |
 | `Ctrl+Shift+S` | 另存为（转为本地文件） |
 | `Ctrl+W` | 关闭当前标签 |
+| `Ctrl+F` | 在编辑器中搜索 / 替换 |
 | `Ctrl+C` | 复制日志选中行或选中文本（焦点在日志区时） |
 
 ## adb 查找顺序

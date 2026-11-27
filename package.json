@@ -1,6 +1,6 @@
 {
   "name": "droid-studio-lite",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Lightweight Android Studio companion: Logcat, Device Explorer and text editor",
   "private": true,
   "main": "dist-electron/main.js",
@@ -17,6 +17,7 @@
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-xml": "^6.1.0",
+    "@codemirror/search": "^6.7.2",
     "@codemirror/state": "^6.5.2",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.36.1",
